@@ -8,7 +8,7 @@ export interface Empreendedor {
   id?: number;
   empresa: string;
   email: string;
-  senha?: string;           // se você armazenar senha no mock, marque como opcional
+  senha?: string;           // marcar como opcional
   telefone: string;
   municipio: string;
   estado: string;
@@ -20,11 +20,10 @@ export interface Empreendedor {
   precoKg?: number;
   precoTonelada?: number;
 }
-
 @Injectable({ providedIn: 'root' })
 export class EmpreendedorService {
-  // agora aponta para o seu MockAPI online
-  private base = `${environment.apiUrl}/empreendedores`;
+  // adiciona /empreendedores/empreendedores
+  private base = `${environment.apiUrl}/empreendedores/empreendedores`;
 
   constructor(private http: HttpClient) {}
 
@@ -33,7 +32,6 @@ export class EmpreendedorService {
   }
 
   login(email: string, senha: string): Observable<Empreendedor[]> {
-    // o MockAPI filtra pelo query string
     return this.http.get<Empreendedor[]>(
       `${this.base}?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
     );
@@ -44,7 +42,7 @@ export class EmpreendedorService {
   }
 
   atualizar(id: number, data: Partial<Empreendedor>): Observable<Empreendedor> {
-    return this.http.patch<Empreendedor>(`${this.base}/${id}`, data);
+    return this.http.put<Empreendedor>(`${this.base}/${id}`, data);
   }
 
   getById(id: string | number): Observable<Empreendedor> {
