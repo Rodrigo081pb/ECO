@@ -1,1 +1,111 @@
-<p>pesquisa works!</p>
+<br>
+<br>
+<!-- src/app/pesquisa/pesquisa.component.html -->
+<div class="min-h-screen bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-6">
+
+  <!-- Linha com botão voltar + filtros -->
+  <section class="mb-8 grid grid-cols-1 sm:grid-cols-4 gap-4 max-w-6xl mx-auto items-end">
+
+    <!-- Botão Voltar -->
+    <div>
+      <a
+        routerLink=" "
+        class="w-full inline-flex justify-center items-center px-4 py-2 bg-white dark:bg-gray-700 border border-emerald-500 text-emerald-600 font-semibold
+               rounded-full shadow-md hover:bg-emerald-50 hover:scale-105 transition-all duration-300 gap-2"
+      >
+        <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Voltar
+      </a>
+    </div>
+
+    <!-- Estado -->
+    <div>
+      <label class="block mb-1 font-medium">Filtrar por Estado</label>
+      <select
+        [(ngModel)]="filterEstado"
+        (ngModelChange)="applyFilters()"
+        class="w-full p-2 border rounded bg-white dark:bg-gray-700"
+      >
+        <option value="">Todos</option>
+        <option *ngFor="let uf of estados" [value]="uf">{{ uf }}</option>
+      </select>
+    </div>
+
+    <!-- Material -->
+    <div>
+      <label class="block mb-1 font-medium">Filtrar por Material</label>
+      <select
+        [(ngModel)]="filterMaterial"
+        (ngModelChange)="applyFilters()"
+        class="w-full p-2 border rounded bg-white dark:bg-gray-700"
+      >
+        <option value="">Todos</option>
+        <option *ngFor="let m of materiaisList" [value]="m">{{ m }}</option>
+      </select>
+    </div>
+
+    <!-- Botão Aplicar -->
+    <div>
+      <button
+        (click)="applyFilters()"
+        class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded transition"
+      >
+        Aplicar
+      </button>
+    </div>
+  </section>
+
+  <!-- Resultados -->
+  <section class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+    <div
+      *ngFor="let e of filtered"
+      class="bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden flex flex-col"
+    >
+      <!-- Ícone -->
+      <div class="flex justify-center p-4 bg-emerald-100 dark:bg-emerald-900">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="w-12 h-12 text-emerald-600"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 2C8.134 2 5 5.134 5 9c0 4.418 7 13 7 13s7-8.582 7-13c0-3.866-3.134-7-7-7z"/>
+        </svg>
+      </div>
+
+      <div class="p-4 flex-1 flex flex-col">
+        <h3 class="text-xl font-bold text-emerald-600 mb-2">{{ e.empresa }}</h3>
+        <p class="text-sm text-gray-700 dark:text-gray-300 mb-2 flex-1">
+          {{ e.biografia }}
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">
+          <strong>Horário:</strong> {{ e.horario }}
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          <strong>Endereço:</strong> {{ e.estado }}, CEP {{ e.cep }}
+        </p>
+
+        <div class="mt-auto space-y-2">
+          <!-- WhatsApp -->
+          <a
+            [href]="whatsappLink(e)"
+            target="_blank"
+            class="block text-center py-2 bg-lime-400 hover:bg-lime-300 text-gray-900 rounded transition"
+          >
+            Entrar em Contato
+          </a>
+          <!-- Catálogo -->
+          <a
+            [routerLink]="['/catalogo', e.id]"
+            class="block text-center py-2 border border-emerald-600 text-emerald-600 rounded
+                   hover:bg-emerald-600 hover:text-white transition"
+          >
+            Ver Catálogo
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
