@@ -2,11 +2,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from './environment';
 
 export interface Empreendedor {
   id?: number;
   empresa: string;
   email: string;
+  senha?: string;           // se você armazenar senha no mock, marque como opcional
   telefone: string;
   municipio: string;
   estado: string;
@@ -21,7 +23,9 @@ export interface Empreendedor {
 
 @Injectable({ providedIn: 'root' })
 export class EmpreendedorService {
-  private base = 'http://localhost:3000/empreendedores';
+  // agora aponta para o seu MockAPI online
+  private base = `${environment.apiUrl}/empreendedores`;
+
   constructor(private http: HttpClient) {}
 
   criar(data: Empreendedor): Observable<Empreendedor> {
@@ -29,7 +33,10 @@ export class EmpreendedorService {
   }
 
   login(email: string, senha: string): Observable<Empreendedor[]> {
-    return this.http.get<Empreendedor[]>(`${this.base}?email=${email}&senha=${senha}`);
+    // o MockAPI filtra pelo query string
+    return this.http.get<Empreendedor[]>(
+      `${this.base}?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
+    );
   }
 
   listarTodos(): Observable<Empreendedor[]> {
