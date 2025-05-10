@@ -1,0 +1,107 @@
+/* importar fonte moderna */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
+
+:host { display: block; font-family: 'Montserrat', sans-serif; }
+
+/* animação contínua da onda */
+.wave {
+  animation: waveAnim 10s linear infinite;
+}
+@keyframes waveAnim {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(-25%); }
+  100% { transform: translateX(0); }
+}
+
+/* estrutura principal */
+.footer {
+  position: relative;
+}
+.content {
+  display: grid;
+}
+.footer-col .heading {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 600;
+  transition: color .3s ease;
+}
+.description {
+  margin-top: .5rem;
+  color: rgba(255,255,255,0.85);
+}
+
+/* ícones */
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  stroke: #fff;
+  transition: transform .4s ease, stroke .4s ease;
+}
+
+/* efeitos de hover únicos */
+.footer-col:hover .heading {
+  color: #A3E635; /* lime-400 */
+}
+.footer-col:hover .icon {
+  transform: rotate(15deg) scale(1.2);
+  stroke: #A3E635;
+}
+
+/* links */
+.links a {
+  color: rgba(255,255,255,0.9);
+  position: relative;
+  padding-left: .5rem;
+  transition: color .3s ease;
+}
+.links a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 2px;
+  background: #A3E635;
+  transition: width .3s ease, top .3s ease;
+}
+.links a:hover {
+  color: #A3E635;
+}
+.links a:hover::before {
+  width: 100%;
+  top: 60%;
+}
+
+/* botão de login */
+.login-btn {
+  display: inline-block;
+  margin-top: .5rem;
+  padding: .5rem 1rem;
+  background: #A3E635;
+  color: #111;
+  font-weight: 600;
+  border-radius: .5rem;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.login-btn:hover {
+  transform: scale(1.05) rotate(-2deg);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+/* separador animado */
+.separator {
+  border-top: 1px solid #A3E635;
+  width: 60%;
+  animation: pulseSeparator 2s infinite;
+}
+@keyframes pulseSeparator {
+  0%,100% { opacity: .6; }
+  50% { opacity: 1; }
+}
+
+/* rodapé inferior */
+.footer-bottom {
+  letter-spacing: .5px;
+}

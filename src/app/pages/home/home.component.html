@@ -1,0 +1,302 @@
+<!-- src/app/pages/home/home.component.html -->
+<div class="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+
+  <!-- HERO / NOSSO PROPÓSITO -->
+  <section
+    class="relative flex items-center justify-center h-screen bg-cover bg-center"
+    style="background-image: url('/assets/hero-eco.jpg')"
+  >
+    <div class="absolute inset-0 bg-black/50 dark:bg-gray-900/70"></div>
+    <div class="relative z-10 text-center px-4 space-y-6 max-w-2xl">
+      <h1 class="text-5xl md:text-6xl font-extrabold text-white">
+        Conectando o Futuro da Reciclagem
+      </h1>
+      <p class="text-lg md:text-xl text-gray-200">
+        Encontre coletores e compradores de materiais recicláveis em todo o Brasil.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          routerLink="/pesquisa"
+          class="px-8 py-3 bg-lime-400 hover:bg-lime-300 text-gray-900 font-semibold rounded-full transition transform hover:scale-105"
+        >
+          Começar Pesquisa
+        </a>
+        <button
+          (click)="openModal()"
+          class="px-8 py-3 border-2 border-white text-white rounded-full hover:bg-white hover:text-emerald-600 transition"
+        >
+          Conhecer o Econnect
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section class="py-16 px-6 grid md:grid-cols-2 gap-8 items-center max-w-6xl mx-auto">
+    <div>
+      <h2 class="text-3xl font-bold text-emerald-600 dark:text-lime-300 mb-4">
+        Econnect: Sustentabilidade em Ação
+      </h2>
+      <p class="mb-4">
+        O Econnect nasceu para unir quem coleta materiais recicláveis a quem precisa deles.
+        Com poucos cliques, você escolhe seu estado e encontra parceiros de coleta ou pontos de venda.
+      </p>
+      <ul class="space-y-2">
+        <li class="flex items-center">
+          <span class="inline-block w-2 h-2 bg-lime-400 rounded-full mr-2"></span>
+          Foco em comunidades locais
+        </li>
+        <li class="flex items-center">
+          <span class="inline-block w-2 h-2 bg-lime-400 rounded-full mr-2"></span>
+          Dados 100% abertos e colaborativos
+        </li>
+        <li class="flex items-center">
+          <span class="inline-block w-2 h-2 bg-lime-400 rounded-full mr-2"></span>
+          Impacto social mensurável
+        </li>
+      </ul>
+      <a
+        routerLink="/pesquisa"
+        class="mt-6 inline-block px-6 py-2 bg-lime-400 hover:bg-lime-300 text-gray-900 rounded-full transition"
+      >
+        Ver Mapa de Coleta
+      </a>
+    </div>
+    <div class="flex justify-center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+        class="w-full h-full fill-lime-400 dark:fill-lime-300 transition-colors"
+      >
+        <!-- SVG content omitido para brevidade -->
+      </svg>
+    </div>
+  </section>
+
+  <!-- MODAL MULTI-ETAPA (glassmorphism) -->
+  <div
+    *ngIf="showModal"
+    class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50"
+  >
+    <div
+      class="relative w-full max-w-md p-6
+             bg-white/10 dark:bg-gray-900/30
+             backdrop-blur-lg
+             border border-white/20
+             rounded-3xl
+             shadow-2xl
+             overflow-hidden"
+    >
+      <!-- botão fechar -->
+      <button
+        (click)="closeModal()"
+        aria-label="Fechar"
+        class="absolute top-4 right-4
+               w-8 h-8 flex items-center justify-center
+               bg-white/20 dark:bg-gray-800/40
+               backdrop-blur-md
+               rounded-full
+               text-white text-xl
+               hover:bg-white/30 hover:scale-110
+               transition"
+      >&times;</button>
+
+      <ng-container [ngSwitch]="etapa">
+
+        <!-- Etapa 0 -->
+        <div *ngSwitchCase="0" class="space-y-6 text-center">
+          <h2 class="text-2xl font-bold text-white">Como você se identifica?</h2>
+          <div class="flex flex-col gap-4">
+            <button
+              (click)="selecionar('visitante')"
+              class="py-3 w-full
+                     bg-white/20 dark:bg-gray-800/40
+                     backdrop-blur-md
+                     border border-lime-400/50
+                     text-lime-300 font-semibold
+                     rounded-xl
+                     transform hover:-translate-y-1 hover:scale-105
+                     transition duration-300"
+            >
+              Sou visitante
+            </button>
+
+            <button
+              (click)="selecionar('coletor')"
+              class="py-3 w-full
+                     bg-white/20 dark:bg-gray-800/40
+                     backdrop-blur-md
+                     border border-emerald-500/50
+                     text-emerald-300 font-semibold
+                     rounded-xl
+                     transform hover:-translate-y-1 hover:scale-105
+                     transition duration-300"
+            >
+              Sou coletor
+            </button>
+
+            <button
+              (click)="selecionar('empreendedor')"
+              class="py-3 w-full
+                     bg-white/20 dark:bg-gray-800/40
+                     backdrop-blur-md
+                     border border-lime-300/50
+                     text-lime-200 font-semibold
+                     rounded-xl
+                     transform hover:-translate-y-1 hover:scale-105
+                     transition duration-300"
+            >
+              Sou empreendedor
+            </button>
+          </div>
+        </div>
+
+        <!-- Etapa 1: Coletor -->
+        <div *ngSwitchCase="1" class="space-y-6">
+          <h2 class="text-xl font-semibold text-white">Conte mais sobre você</h2>
+          <form class="space-y-4">
+
+            <!-- Sexo -->
+            <div>
+              <label class="block mb-1 text-white">Sexo</label>
+              <select
+                [(ngModel)]="sexo"
+                name="sexo"
+                class="w-full p-3
+                       bg-white/20 dark:bg-gray-800/40
+                       backdrop-blur-md
+                       border border-white/30
+                       rounded-lg
+                       text-white
+                       placeholder-white
+                       focus:outline-none focus:ring-2 focus:ring-lime-300"
+              >
+                <option value="" disabled selected>Selecione</option>
+                <option value="masculino">Masculino</option>
+                <option value="feminino">Feminino</option>
+                <option value="outros">Outros</option>
+              </select>
+            </div>
+
+            <!-- Estado -->
+            <div>
+              <label class="block mb-1 text-white">Estado</label>
+              <select
+                [(ngModel)]="estado"
+                name="estado"
+                class="w-full p-3
+                       bg-white/20 dark:bg-gray-800/40
+                       backdrop-blur-md
+                       border border-white/30
+                       rounded-lg
+                       text-white
+                       placeholder-white
+                       focus:outline-none focus:ring-2 focus:ring-lime-300"
+              >
+                <option value="" disabled selected>Selecione o estado</option>
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espírito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP">São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>
+              </select>
+            </div>
+
+            <!-- Idade -->
+            <div>
+              <label class="block mb-1 text-white">Idade</label>
+              <input
+                type="number"
+                [(ngModel)]="idade"
+                name="idade"
+                placeholder="Idade"
+                class="w-full p-3
+                       bg-white/20 dark:bg-gray-800/40
+                       backdrop-blur-md
+                       border border-white/30
+                       rounded-lg
+                       text-white
+                       placeholder-white
+                       focus:outline-none focus:ring-2 focus:ring-lime-300"
+              />
+            </div>
+
+            <!-- Botão Prosseguir -->
+            <button
+              type="button"
+              (click)="goToPesquisa()"
+              class="w-full py-3
+                     bg-emerald-500/30 dark:bg-emerald-700/30
+                     backdrop-blur-md
+                     border border-emerald-400/50
+                     text-white font-semibold
+                     rounded-xl
+                     hover:bg-emerald-500/40 hover:scale-105
+                     transform transition duration-300"
+            >
+              Prosseguir
+            </button>
+          </form>
+        </div>
+
+        <!-- Etapa 2: Empreendedor -->
+        <div *ngSwitchCase="2" class="space-y-6 text-center">
+          <p class="text-white">Deseja realizar o cadastro e transformar o mundo?</p>
+          <div class="flex gap-4 justify-center">
+            <button
+              routerLink="/cadastro"
+              (click)="closeModal()"
+              class="px-6 py-3
+                     bg-lime-400/30 dark:bg-lime-300/30
+                     backdrop-blur-md
+                     border border-lime-300/50
+                     text-gray-900 dark:text-gray-800 font-semibold
+                     rounded-xl
+                     hover:bg-lime-400/40 hover:-translate-y-1
+                     transform transition duration-300"
+            >
+              Sim
+            </button>
+            <button
+              (click)="closeModal()"
+              class="px-6 py-3
+                     bg-white/20 dark:bg-gray-800/40
+                     backdrop-blur-md
+                     border border-white/30
+                     text-white font-semibold
+                     rounded-xl
+                     hover:bg-white/30 hover:-translate-y-1
+                     transform transition duration-300"
+            >
+              Não
+            </button>
+          </div>
+        </div>
+
+      </ng-container>
+    </div>
+  </div>
+
+</div>

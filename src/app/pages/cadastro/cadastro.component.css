@@ -1,0 +1,45 @@
+/* src/app/cadastro/cadastro.component.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
+
+:host {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Inputs e selects */
+.input-field {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #CBD5E0;
+  border-radius: 0.5rem;
+  background-color: #F7FAFC;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input-field:focus {
+  outline: none;
+  border-color: #10B981;
+  box-shadow: 0 0 0 3px rgba(16,185,129,0.2);
+}
+
+/* Scrollbar customizado */
+.custom-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.2) transparent;
+}
+.custom-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+/* Ajuste especial para telas muito estreitas */
+@media (max-width: 320px) {
+  .input-field {
+    padding: 0.5rem 0.6rem;
+  }
+}

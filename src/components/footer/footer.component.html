@@ -1,0 +1,79 @@
+<!-- src/app/footer/footer.component.html -->
+<div class="footer bg-gradient-to-r from-emerald-700 to-emerald-600 text-white overflow-hidden">
+
+  <!-- onda animada no topo -->
+  <div class="wave-container absolute top-0 left-0 w-full overflow-hidden leading-[0]">
+    <svg class="wave block w-[150%] h-16" viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path fill="#047857" d="M0,64L48,85.3C96,107,192,149,288,165.3C384,181,480,171,576,144C672,117,768,75,864,80C960,85,1056,139,1152,144C1248,149,1344,107,1392,85.3L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+    </svg>
+  </div>
+
+  <!-- conteúdo principal -->
+  <div class="content relative z-10 max-w-5xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center md:text-left">
+
+    <!-- Econnect -->
+    <div class="footer-col">
+      <h4 class="heading">
+        <svg class="icon leaf" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 2C8.134 2 5 5.134 5 9c0 4.418 7 13 7 13s7-8.582 7-13c0-3.866-3.134-7-7-7z"/>
+        </svg>
+        <span>Econnect</span>
+      </h4>
+      <p class="description">Conectando coletores e compradores de recicláveis.</p>
+    </div>
+
+    <!-- Links -->
+    <div class="footer-col">
+      <h4 class="heading">
+        <svg class="icon link" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 7a2 2 0 00-2-2H9m0 0a2 2 0 00-2 2v4m0 0h8m-8 0a2 2 0 002 2h4a2 2 0 002-2z"/>
+        </svg>
+        <span>Links</span>
+      </h4>
+      <ul class="links space-y-1">
+        <li><a routerLink="/">Home</a></li>
+        <li><a routerLink="/pesquisa">Pesquisa</a></li>
+        <li><a routerLink="/cadastro">Cadastro</a></li>
+      </ul>
+    </div>
+
+    <!-- Suporte -->
+    <div class="footer-col">
+      <h4 class="heading">
+        <svg class="icon support" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M18.364 5.636l-1.414 1.414M6.343 17.657l-1.414 1.414M2 12h2m16 0h2M7.05 7.05l1.414 1.414M16.95 16.95l1.414 1.414M12 2v2m0 16v2"/>
+        </svg>
+        <span>Suporte</span>
+      </h4>
+      <ul class="links space-y-1">
+        <li><a routerLink="/sobre">Sobre</a></li>
+        <li><a routerLink="/termos">Termos de Uso</a></li>
+        <li><a routerLink="/contato">Contate‑nos</a></li>
+      </ul>
+    </div>
+
+    <!-- Conta -->
+    <div class="footer-col">
+      <h4 class="heading">
+        <svg class="icon user" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5.121 17.804A8.962 8.962 0 0112 15c2.209 0 4.209.732 5.879 1.972M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        <span>Conta</span>
+      </h4>
+      <a routerLink="/login" class="login-btn">Realizar Login</a>
+    </div>
+
+  </div>
+
+  <!-- separador -->
+  <hr class="separator mx-auto">
+
+  <!-- copyright -->
+  <div class="footer-bottom relative z-10 text-center text-sm text-gray-200 py-4">
+    &copy; 2025 Econnect. Todos os direitos reservados.
+  </div>
+</div>

@@ -1,6 +1,16 @@
+// main.ts
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
+import { importProvidersFrom } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+import { AppComponent } from './app/app.component';
+import { router } from './app/app.routes';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    importProvidersFrom(HttpClientModule), // provê HttpClient para todos os serviços
+    provideAnimations(),                  // habilita @angular/animations
+    router
+  ]
+});
