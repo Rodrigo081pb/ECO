@@ -1,11 +1,26 @@
-
-<div class="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 text-blue-900 flex flex-col animate-fade-in">
+<div class="mt-16 min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 text-blue-900 flex flex-col animate-fade-in">
   <!-- Header -->
   <header class="flex items-center p-6 bg-gradient-to-r from-blue-400 to-blue-300">
-    <svg class="w-8 h-8 text-white mr-4 animate-spin-slow"></svg>
+    <svg class="w-8 h-8 text-white mr-4 animate-spin-slow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <circle cx="12" cy="12" r="10" stroke-width="4" class="opacity-25"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M4 12a8 8 0 018-8" class="opacity-75"/>
+    </svg>
+
     <h1 class="text-2xl font-bold text-white">Configurações – {{ empreendedor.empresa }}</h1>
+
+    <!-- Botão Sair com seta para esquerda -->
     <button (click)="logout()"
-            class="ml-auto bg-white text-blue-500 px-4 py-1 rounded-lg shadow hover:scale-105 transition">
+            class="ml-auto flex items-center bg-white text-blue-500 px-4 py-2 rounded-lg shadow hover:scale-105 transition">
+      <svg xmlns="http://www.w3.org/2000/svg"
+           class="w-5 h-5 mr-2"
+           fill="none"
+           viewBox="0 0 24 24"
+           stroke="currentColor">
+        <path stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7" />
+      </svg>
       Sair
     </button>
   </header>
@@ -39,27 +54,35 @@
     <section class="bg-white shadow-lg rounded-xl p-6">
       <h2 class="text-xl font-semibold text-blue-500 mb-4">Tabela de Preços</h2>
       <form [formGroup]="form" (ngSubmit)="onSave()">
-        <table class="w-full table-auto rounded-lg overflow-hidden">
-          <thead class="bg-blue-500 text-white">
-            <tr>
-              <th class="px-4 py-2 text-left">Material</th>
-              <th class="px-4 py-2 text-center">R$/KG</th>
-              <th class="px-4 py-2 text-center">R$/Ton</th>
-            </tr>
-          </thead>
-          <tbody formArrayName="prices">
-            <tr *ngFor="let grp of prices.controls; let i = index" [formGroupName]="i"
-                class="odd:bg-blue-50 hover:bg-blue-100">
-              <td class="px-4 py-2 font-medium">{{ grp.value.material }}</td>
-              <td class="px-4 py-2 text-center">
-                <input formControlName="precoKg" type="number" step="0.01" class="input-field w-24" />
-              </td>
-              <td class="px-4 py-2 text-center">
-                <input formControlName="precoTon" type="number" step="0.01" class="input-field w-24" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[600px] table-auto rounded-lg overflow-hidden">
+            <thead class="bg-blue-500 text-white">
+              <tr>
+                <th class="px-4 py-2 text-left">Material</th>
+                <th class="px-4 py-2 text-center">R$/KG</th>
+                <th class="px-4 py-2 text-center">R$/TON</th>
+              </tr>
+            </thead>
+            <tbody formArrayName="prices">
+              <tr *ngFor="let grp of prices.controls; let i = index" [formGroupName]="i"
+                  class="odd:bg-blue-50 hover:bg-blue-100">
+                <td class="px-4 py-2 font-medium whitespace-nowrap">{{ grp.value.material }}</td>
+                <td class="px-4 py-2 text-center">
+                  <input formControlName="precoKg"
+                         type="number"
+                         step="0.01"
+                         class="input-field w-full sm:w-24" />
+                </td>
+                <td class="px-4 py-2 text-center">
+                  <input formControlName="precoTon"
+                         type="number"
+                         step="0.01"
+                         class="input-field w-full sm:w-24" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <div class="mt-6 flex flex-col sm:flex-row gap-4">
           <button type="submit" [disabled]="saving"
@@ -71,6 +94,7 @@
             {{ deleting ? 'Excluindo...' : 'Excluir Conta' }}
           </button>
         </div>
+
         <p *ngIf="message" class="mt-4 text-center text-red-600">{{ message }}</p>
       </form>
     </section>
