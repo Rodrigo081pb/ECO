@@ -12,7 +12,7 @@ export const routes: Route[] = [
   { path: '',                 component: HomeComponent },
   { path: 'pesquisa',         component: PesquisaComponent },
   { path: 'cadastro',         component: CadastroComponent },
-  { path: 'super-admin-home', component: HomeAdminComponent },
+  { path: 'admin-eco', component: HomeAdminComponent },
   { path: 'login',            component: LoginComponent },
   // Rota de catálogo agora com parâmetro :id
   { path: 'catalogo/:id', component: CatalogoComponent },

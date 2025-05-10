@@ -1,9 +1,6 @@
-<!-- src/app/cadastro/cadastro.component.html -->
+<!-- src/app/pages/cadastro/cadastro.component.html -->
 <div class="h-screen flex items-center justify-center bg-gradient-to-br from-emerald-700 to-emerald-600 p-6">
   <div class="w-full max-w-4xl bg-white dark:bg-gray-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
-
-    <br>
-    <br>
 
     <!-- Cabeçalho -->
     <header class="bg-emerald-600 dark:bg-emerald-700 px-8 py-4">
@@ -78,7 +75,7 @@
           <input formControlName="horario" placeholder="Horário de Funcionamento" class="input-field" />
         </div>
 
-        <!-- Biografia (2 colunas em sm+, 4 em lg+) -->
+        <!-- Biografia -->
         <div class="col-span-1 sm:col-span-2 lg:col-span-4 flex flex-col">
           <label class="mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Biografia</label>
           <textarea formControlName="biografia"
@@ -87,7 +84,7 @@
                     class="input-field resize-none h-24"></textarea>
         </div>
 
-        <!-- Materiais Aceitos (full width) -->
+        <!-- Materiais Aceitos -->
         <fieldset class="col-span-full border border-gray-200 dark:border-gray-700 rounded-lg p-4">
           <legend class="px-2 font-semibold text-gray-700 dark:text-gray-300">Materiais Aceitos</legend>
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mt-3">
@@ -100,20 +97,15 @@
           </div>
         </fieldset>
 
-        <!-- Botão de Submit (full width) -->
+        <!-- Botão de Submit -->
         <button type="submit"
                 [disabled]="loading"
-                class="col-span-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold
-                       rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-emerald-500 transition
-                       disabled:opacity-50">
+                class="col-span-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-emerald-500 transition disabled:opacity-50">
           {{ loading ? 'Cadastrando...' : 'Cadastrar' }}
         </button>
 
-        <!-- Mensagens (full width) -->
+        <!-- Mensagens de feedback -->
         <p *ngIf="errorMsg" class="col-span-full text-center text-sm text-red-500">{{ errorMsg }}</p>
-        <p *ngIf="sucesso"   class="col-span-full text-center text-sm text-green-500">
-          Obrigado por se cadastrar! Redirecionando…
-        </p>
       </form>
     </div>
   </div>

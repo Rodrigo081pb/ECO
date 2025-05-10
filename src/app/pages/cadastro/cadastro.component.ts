@@ -1,8 +1,14 @@
+// src/app/pages/cadastro/cadastro.component.ts
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule }      from '@angular/common';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
-import { EmpreendedorService } from '../../../../services/EmpreendedorService.service';
+import { EmpreendedorService }  from '../../../../services/EmpreendedorService.service';
 
 interface Estado {
   sigla: string;
@@ -18,7 +24,7 @@ interface Estado {
 })
 export class CadastroComponent implements OnInit {
   cadastroForm: FormGroup;
-  materiaisList = ['Papel', 'Plástico', 'Vidro', 'Metal', 'Eletrônicos', 'Outros'];
+  materiaisList = ['Papel','Plástico','Vidro','Metal','Eletrônicos','Outros'];
   estados: Estado[] = [
     { sigla: 'AC', nome: 'Acre' },
     { sigla: 'AL', nome: 'Alagoas' },
@@ -50,7 +56,6 @@ export class CadastroComponent implements OnInit {
   ];
 
   loading = false;
-  sucesso = false;
   errorMsg = '';
 
   constructor(
@@ -77,25 +82,20 @@ export class CadastroComponent implements OnInit {
   ngOnInit(): void {}
 
   senhasIguais(group: FormGroup) {
-    const s = group.get('senha')?.value;
-    const c = group.get('confirmarSenha')?.value;
-    return s === c ? null : { mismatch: true };
+    return group.get('senha')?.value === group.get('confirmarSenha')?.value
+      ? null
+      : { mismatch: true };
   }
 
   toggleMaterial(material: string, checked: boolean): void {
-    const control = this.cadastroForm.get('materiais');
-    if (!control) return;
-    const list: string[] = control.value || [];
-    control.setValue(
-      checked
-        ? [...list, material]
-        : list.filter(m => m !== material)
-    );
+    const ctrl = this.cadastroForm.get('materiais');
+    if (!ctrl) return;
+    const list: string[] = ctrl.value || [];
+    ctrl.setValue( checked ? [...list, material] : list.filter(m => m !== material) );
   }
 
   onSubmit(): void {
     this.cadastroForm.markAllAsTouched();
-    console.log('Form válido?', this.cadastroForm.valid, this.cadastroForm.value);
     if (this.cadastroForm.invalid) {
       console.warn('Formulário inválido, abortando submit');
       return;
@@ -109,7 +109,7 @@ export class CadastroComponent implements OnInit {
       next: (res) => {
         console.log('Conta criada com sucesso:', res);
         localStorage.setItem('empreendedor', JSON.stringify(res));
-        this.router.navigate(['/super-admin-home']);
+        this.router.navigateByUrl('/admin-eco');
       },
       error: (err) => {
         console.error('Erro ao criar conta:', err);
