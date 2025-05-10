@@ -17,7 +17,13 @@
         "Eletrônicos",
         "Outros"
       ],
-      "horario": "sssss"
+      "horario": "sssss",
+      "preco_Papel_kg": 0,
+      "preco_Papel_ton": 0,
+      "preco_Eletrônicos_kg": 0,
+      "preco_Eletrônicos_ton": 0,
+      "preco_Outros_kg": 0,
+      "preco_Outros_ton": 0
     },
     {
       "id": "c483",
@@ -53,7 +59,15 @@
         "Outros",
         "Vidro"
       ],
-      "horario": "sasa"
+      "horario": "sasa",
+      "preco_Plástico_kg": 0,
+      "preco_Plástico_ton": 0,
+      "preco_Papel_kg": 0,
+      "preco_Papel_ton": 0,
+      "preco_Outros_kg": 0,
+      "preco_Outros_ton": 0,
+      "preco_Vidro_kg": 0,
+      "preco_Vidro_ton": 0
     }
   ]
 }

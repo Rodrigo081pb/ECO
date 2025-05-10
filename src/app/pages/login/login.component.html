@@ -1,1 +1,74 @@
-<p>login works!</p>
+
+<div class="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-emerald-100 to-emerald-200 overflow-hidden">
+  <!-- Ondas atrás -->
+  <svg class="absolute bottom-0 left-0 w-full h-40 text-emerald-300" preserveAspectRatio="none" viewBox="0 0 1440 320">
+    <path fill="currentColor" fill-opacity="0.4"
+          d="M0,256L48,240C96,224,192,192,288,160C384,128,480,96,576,101.3C672,107,768,149,864,149.3C960,149,1056,107,1152,96C1248,85,1344,107,1392,117.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+    </path>
+  </svg>
+
+  <div class="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-xl p-6 space-y-6 animate-fade-in">
+
+    <h2 class="text-2xl font-bold text-emerald-700 text-center">Entrar na sua conta</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <!-- Email -->
+      <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700">Email</label>
+        <input type="email"
+               formControlName="email"
+               placeholder="seu@email"
+               class="mt-1 p-3 bg-emerald-50 placeholder-emerald-400 rounded-lg border
+                      border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-300 transition" />
+      </div>
+
+      <!-- Senha -->
+      <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700">Senha</label>
+        <input type="password"
+               formControlName="senha"
+               placeholder="••••••••"
+               class="mt-1 p-3 bg-emerald-50 placeholder-emerald-400 rounded-lg border
+                      border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-300 transition" />
+      </div>
+
+      <!-- Lembrar senha -->
+      <div class="flex items-center space-x-2">
+        <input type="checkbox"
+               formControlName="remember"
+               id="remember"
+               class="h-4 w-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500" />
+        <label for="remember" class="text-sm text-gray-700">Lembrar senha</label>
+      </div>
+
+      <!-- Esqueci a senha -->
+      <div class="text-right">
+        <a routerLink="/recuperar-senha" class="text-sm text-emerald-600 hover:underline">Esqueci minha senha</a>
+      </div>
+
+      <!-- Erro -->
+      <div *ngIf="error" class="text-red-600 text-sm text-center">{{ error }}</div>
+
+      <!-- Botão -->
+      <button type="submit"
+              [disabled]="loading"
+              class="w-full flex items-center justify-center py-3 bg-emerald-600 hover:bg-emerald-700
+                     text-white font-semibold rounded-lg transition disabled:opacity-50">
+        <svg *ngIf="loading"
+             class="w-5 h-5 mr-2 animate-spin text-white"
+             xmlns="http://www.w3.org/2000/svg"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="12" r="10" stroke-width="4" stroke-opacity="0.25"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4"
+                d="M4 12a8 8 0 018-8"/>
+        </svg>
+        {{ loading ? 'Autenticando…' : 'Entrar' }}
+      </button>
+    </form>
+
+    <div class="text-center text-sm text-gray-600">
+      Ainda não tem conta?
+      <a routerLink="/cadastro" class="text-emerald-600 font-medium hover:underline">Crie sua conta</a>
+    </div>
+  </div>
+</div>
