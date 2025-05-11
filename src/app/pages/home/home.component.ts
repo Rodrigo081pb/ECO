@@ -9,6 +9,7 @@ import { ColetorService, Coletor } from '../../../../services/coletor.service';
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
   showModal = false;
