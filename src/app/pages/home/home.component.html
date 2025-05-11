@@ -165,15 +165,11 @@
         data-aos-delay="100"
       >
         <i class="fas fa-recycle text-green-200 text-4xl mb-4"></i>
-        <h4 class="text-xl font-semibold mb-2">Reduzir Desperdício</h4>
+        <h4 class="text-xl font-semibold mb-2 text-center">Reduzir Desperdício</h4>
         <p class="text-sm mb-4 flex-grow">
           Cada item reciclado evita toneladas de lixo no meio ambiente.
         </p>
-        <button
-          class="mt-auto inline-block px-5 py-2 bg-white/30 hover:bg-white/40 text-white rounded-full text-sm font-medium transition"
-        >
-          Saiba mais
-        </button>
+
       </div>
 
       <!-- Card 2 -->
@@ -183,15 +179,10 @@
         data-aos-delay="200"
       >
         <i class="fas fa-tree text-green-200 text-4xl mb-4"></i>
-        <h4 class="text-xl font-semibold mb-2">Conservar Recursos</h4>
+        <h4 class="text-xl font-semibold mb-2 text-center">Conservar Recursos</h4>
         <p class="text-sm mb-4 flex-grow">
           Economizamos água, energia e matérias‑primas para as próximas gerações.
         </p>
-        <button
-          class="mt-auto inline-block px-5 py-2 bg-white/30 hover:bg-white/40 text-white rounded-full text-sm font-medium transition"
-        >
-          Saiba mais
-        </button>
       </div>
 
       <!-- Card 3 -->
@@ -201,55 +192,101 @@
         data-aos-delay="300"
       >
         <i class="fas fa-hand-holding-dollar text-green-200 text-4xl mb-4"></i>
-        <h4 class="text-xl font-semibold mb-2">Gerar Renda</h4>
+        <h4 class="text-xl font-semibold mb-2 text-center">Gerar Renda</h4>
         <p class="text-sm mb-4 flex-grow">
           Empreendedores encontram matéria‑prima a custos justos e criam
           oportunidades.
         </p>
-        <button
-          class="mt-auto inline-block px-5 py-2 bg-white/30 hover:bg-white/40 text-white rounded-full text-sm font-medium transition"
-        >
-          Saiba mais
-        </button>
       </div>
     </div>
   </section>
 
-
-
-  <!-- MODAL MULTI-ETAPA -->
+  <!-- MODAL MULTI -->
   <div
     *ngIf="showModal"
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
   >
     <div
-      class="bg-white dark:bg-gray-900 rounded-2xl p-6 w-full max-w-md shadow-xl relative z-60"
+      class="bg-white dark:bg-gray-900 rounded-2xl p-6 w-full max-w-md shadow-xl relative overflow-hidden"
+      data-aos="zoom-in"
+      data-aos-delay="100"
     >
+      <!-- Botão fechar -->
       <button
         (click)="closeModal()"
-        class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+        class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-2xl"
         aria-label="Fechar"
       >&times;</button>
 
+      <!-- Logo no topo -->
+      <div class="flex justify-center mb-6">
+        <img
+          src="/logo.png"
+          alt="Logo Econect"
+          class="h-17 w-auto"
+        />
+      </div>
+
+      <!-- Conteúdo por etapa -->
       <ng-container [ngSwitch]="etapa">
-        <!-- Etapa 0 -->
-        <div *ngSwitchCase="0" class="text-center space-y-6">
-          <h2 class="text-2xl font-bold">Como você se identifica ?</h2>
-          <div class="flex flex-col gap-3">
-            <button (click)="selecionar('visitante')" class="btn-modal">Sou visitante</button>
-            <button (click)="selecionar('coletor')"   class="btn-modal">Sou coletor</button>
-            <button (click)="selecionar('empreendedor')" class="btn-modal">Sou empreendedor</button>
+        <!-- Etapa 0: Seleção de perfil -->
+        <div *ngSwitchCase="0" class="space-y-6 text-center">
+          <h2 class="text-2xl font-bold">Como você se identifica?</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <!-- Visitante -->
+            <div
+              (click)="selecionar('visitante')"
+              class="cursor-pointer bg-gray-100 dark:bg-gray-800 rounded-lg p-4 flex flex-col items-center transition transform hover:scale-105 shadow-sm hover:shadow-md"
+              data-aos="fade-up"
+            >
+              <i class="fas fa-user text-green-500 text-3xl mb-2"></i>
+              <h3 class="font-semibold mb-1">Visitante</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-300">
+                Busco parceiros e informações de coleta.
+              </p>
+            </div>
+
+            <!-- Coletor -->
+            <div
+              (click)="selecionar('coletor')"
+              class="cursor-pointer bg-gray-100 dark:bg-gray-800 rounded-lg p-4 flex flex-col items-center transition transform hover:scale-105 shadow-sm hover:shadow-md"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
+              <i class="fas fa-recycle text-green-500 text-3xl mb-2"></i>
+              <h3 class="font-semibold mb-1">Coletor</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-300">
+                Eu coleto materiais recicláveis.
+              </p>
+            </div>
+
+            <!-- Empreendedor -->
+            <div
+              (click)="selecionar('empreendedor')"
+              class="cursor-pointer bg-gray-100 dark:bg-gray-800 rounded-lg p-4 flex flex-col items-center transition transform hover:scale-105 shadow-sm hover:shadow-md"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              <i class="fas fa-store text-green-500 text-3xl mb-2"></i>
+              <h3 class="font-semibold mb-1">Empreendedor</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-300">
+                Quero comprar e reutilizar materiais.
+              </p>
+            </div>
           </div>
         </div>
 
         <!-- Etapa 1: Coletor -->
         <div *ngSwitchCase="1" class="space-y-4">
-          <h2 class="text-xl font-semibold">Conte mais sobre você</h2>
+          <h2 class="text-xl font-semibold text-center">Conte mais sobre você</h2>
           <form class="space-y-4">
             <div>
               <label class="block mb-1">Sexo</label>
-              <select [(ngModel)]="sexo" name="sexo"
-                      class="w-full p-2 border rounded bg-white dark:bg-gray-800">
+              <select
+                [(ngModel)]="sexo"
+                name="sexo"
+                class="w-full p-2 border rounded bg-white dark:bg-gray-800"
+              >
                 <option value="" disabled selected>Selecione</option>
                 <option value="masculino">Masculino</option>
                 <option value="feminino">Feminino</option>
@@ -258,8 +295,11 @@
             </div>
             <div>
               <label class="block mb-1">Estado</label>
-              <select [(ngModel)]="estado" name="estado"
-                      class="w-full p-2 border rounded bg-white dark:bg-gray-800">
+              <select
+                [(ngModel)]="estado"
+                name="estado"
+                class="w-full p-2 border rounded bg-white dark:bg-gray-800"
+              >
                 <option value="" disabled selected>Selecione o estado</option>
                 <option value="AC">Acre</option>
                 <option value="AL">Alagoas</option>
@@ -312,13 +352,29 @@
 
         <!-- Etapa 2: Empreendedor -->
         <div *ngSwitchCase="2" class="text-center space-y-4">
-          <p>Deseja realizar o cadastro e transformar o mundo?</p>
+          <h2 class="text-xl font-semibold">Cadastro Empreendedor</h2>
+          <p>Deseja se cadastrar como empreendedor e transformar o mundo?</p>
           <div class="flex gap-4 justify-center">
-            <button routerLink="/cadastro" (click)="closeModal()" class="btn-modal">Sim</button>
-            <button (click)="closeModal()" class="btn-modal">Não</button>
+            <button
+              routerLink="/cadastro"
+              (click)="closeModal()"
+              class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition"
+            >
+              Sim
+            </button>
+            <button
+              (click)="closeModal()"
+              class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg transition"
+            >
+              Não
+            </button>
           </div>
         </div>
       </ng-container>
     </div>
   </div>
+
+
+
+
 </div>
