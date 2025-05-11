@@ -1,63 +1,69 @@
-<!-- src/app/components/navbar/navbar.component.html -->
-<nav
-  class="fixed top-0 w-full z-50
-         bg-gradient-to-r from-emerald-500 to-lime-400
-         bg-size-200 bg-pos-0 animate-gradientShift
-         text-white px-6 py-4"
->
-  <div class="max-w-7xl mx-auto flex items-center justify-between">
-    <a
-      routerLink="/"
-      class="text-2xl font-bold
-             hover:text-sky-200 hover:scale-110
-             transition transform"
-    >Econnect</a>
-
-    <!-- desktop links -->
-    <div class="hidden md:flex items-center space-x-6">
-      <a
-        routerLink="/login"
-        class="hover:text-sky-200 transition"
-      >Login</a>
-      <a
-        routerLink="/pesquisa"
-        class="px-4 py-1 bg-white text-emerald-700 font-semibold rounded
-               hover:bg-gray-100 hover:scale-105 transition transform"
-      >Pesquisa</a>
-    </div>
-
-    <!-- botão mobile -->
-    <button
-      class="md:hidden text-2xl hover:scale-125 transition"
-      (click)="toggleMenu()"
-    >☰</button>
+<nav class="fixed top-0 w-full z-50 overflow-visible">
+  <!-- onda animada na base da navbar -->
+  <div class="wave-container absolute bottom-0 left-0 w-full overflow-hidden leading-none z-0">
+    <svg
+      class="block w-full h-full wave-anim"
+      viewBox="0 0 1440 320"
+      preserveAspectRatio="none"
+    >
+      <path fill="#047857" d="M0,64L48,85.3C96,107,192,149,…"></path>
+    </svg>
   </div>
 
-  <!-- mobile menu -->
+  <!-- conteúdo da navbar -->
   <div
-    *ngIf="mobileMenu"
-    class="md:hidden px-6 py-4 bg-emerald-600 space-y-2"
+    class="relative bg-gradient-to-r from-emerald-500 to-lime-400
+           text-white px-4 py-0.5 h-20"
   >
-    <a
-      routerLink="/login"
-      class="block text-white hover:bg-emerald-500 px-2 py-1 rounded transition"
-    >Login</a>
-    <a
-      routerLink="/pesquisa"
-      class="block text-white hover:bg-emerald-500 px-2 py-1 rounded transition"
-    >Pesquisa</a>
+    <div class="max-w-7xl mx-auto flex items-center justify-center h-full">
+      <!-- logo centralizado -->
+      <a routerLink="/" class="z-10 hover:scale-110 transition">
+        <img src="/logo.png" alt="Logo" class="h-30 w-auto drop-shadow-lg" />
+      </a>
+
+      <!-- links desktop -->
+      <div class="absolute right-6 flex items-center space-x-4 hidden md:flex z-10">
+        <a routerLink="/login" class="px-4 py-1 border border-white rounded hover:bg-white hover:text-emerald-700 transition">
+          Login
+        </a>
+        <a routerLink="/pesquisa" class="px-4 py-1 bg-white text-emerald-700 font-semibold rounded hover:bg-gray-100 hover:scale-105 transition">
+          Pesquisa
+        </a>
+      </div>
+
+      <!-- mobile hamburger -->
+      <button class="absolute right-6 md:hidden text-2xl hover:scale-125 transition z-10"
+              (click)="toggleMenu()">☰</button>
+    </div>
+  </div>
+
+  <!-- menu mobile -->
+  <div *ngIf="mobileMenu" class="md:hidden px-6 py-4 bg-emerald-600 space-y-2 z-10">
+    <a routerLink="/login" class="block px-5 py-2 bg-white text-emerald-800 rounded hover:bg-gray-100 transition">Login</a>
+    <a routerLink="/pesquisa" class="block px-5 py-2 bg-white text-emerald-800 rounded hover:bg-gray-100 transition">Pesquisa</a>
   </div>
 </nav>
 
 <style>
   @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
-  .bg-size-200 { background-size: 200% 200%; }
-  .bg-pos-0 { background-position: 0% 50%; }
   .animate-gradientShift {
     animation: gradientShift 8s ease infinite;
+    background-size: 200% 200%;
+  }
+
+  @keyframes waveAnim {
+    0%   { transform: translateX(0); }
+    50%  { transform: translateX(-25%); }
+    100% { transform: translateX(0); }
+  }
+  .wave-anim {
+    animation: waveAnim 15s linear infinite;
+  }
+  .wave-container {
+    height: 4rem; /* reduzi de 10rem para 4rem */
   }
 </style>
