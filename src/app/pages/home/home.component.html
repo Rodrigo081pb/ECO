@@ -1,32 +1,71 @@
-<!-- src/app/pages/home/home.component.html -->
+<!-- src/app/home/home.component.html -->
 <div class="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100">
-
+<br>
   <!-- HERO / NOSSO PROPÓSITO -->
   <section
-    class="relative flex items-center justify-center h-screen bg-cover bg-center"
-    style="background-image: url('/assets/hero-eco.jpg')"
+    class="relative min-h-screen bg-cover bg-center bg-fixed"
+    style="background-image: url('/amazon.jpeg')"
   >
-    <div class="absolute inset-0 bg-black/50 dark:bg-gray-900/70"></div>
-    <div class="relative z-10 text-center px-4 space-y-6 max-w-2xl">
-      <h1 class="text-5xl md:text-6xl font-extrabold text-white">
-        Conectando o Futuro da Reciclagem
-      </h1>
-      <p class="text-lg md:text-xl text-gray-200">
-        Encontre coletores e compradores de materiais recicláveis em todo o Brasil.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a
-          routerLink="/pesquisa"
-          class="px-8 py-3 bg-lime-400 hover:bg-lime-300 text-gray-900 font-semibold rounded-full transition transform hover:scale-105"
+    <!-- Overlay escuro + blur para destacar o texto -->
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+
+    <div
+      class="relative z-10 flex flex-col-reverse lg:flex-row items-center h-full container mx-auto px-6 lg:px-20 py-16"
+    >
+      <!-- TEXTO -->
+      <div class="w-full lg:w-1/2 text-center lg:text-left space-y-6">
+        <h1
+          class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight"
+          data-aos="fade-right"
         >
-          Começar Pesquisa
-        </a>
-        <button
-          (click)="openModal()"
-          class="px-8 py-3 border-2 border-white text-white rounded-full hover:bg-white hover:text-emerald-600 transition"
+          Conectando o Futuro da Reciclagem
+        </h1>
+        <p
+          class="text-sm sm:text-base md:text-lg text-gray-200 max-w-lg mx-auto lg:mx-0 leading-relaxed"
+          data-aos="fade-up"
+          data-aos-delay="200"
         >
-          Conhecer o Econnect
-        </button>
+          O <strong>Econect</strong> é uma plataforma que une quem coleta materiais
+          recicláveis a compradores de todo o Brasil. Ao estimular a economia circular,
+          geramos renda, reduzimos o impacto ambiental e colaboramos para um planeta
+          mais limpo e justo. Junte‑se a nós e transforme resíduos em oportunidades!
+        </p>
+        <div
+          class="flex flex-wrap justify-center lg:justify-start gap-4"
+          data-aos="fade-up"
+          data-aos-delay="400"
+        >
+          <a
+            routerLink="/pesquisa"
+            class="px-8 py-3 bg-gradient-to-r from-lime-400 to-emerald-400 hover:from-emerald-400 hover:to-lime-400
+                  text-gray-900 font-semibold rounded-full shadow-lg transition-transform transform
+                  hover:scale-105"
+          >
+            Começar Pesquisa
+          </a>
+          <button
+            (click)="openModal()"
+            class="px-8 py-3 border-2 border-white text-white rounded-full
+                  hover:bg-white hover:text-emerald-600 transition"
+            data-aos="fade-up"
+            data-aos-delay="600"
+          >
+            Conhecer o Econect
+          </button>
+        </div>
+      </div>
+
+      <!-- ILUSTRAÇÃO (desktop only) -->
+      <div
+        class="w-full lg:w-1/2 mb-12 lg:mb-0 flex justify-center"
+        data-aos="zoom-in"
+        data-aos-delay="800"
+      >
+        <img
+          src="/brasil.png"
+          alt="Ilustração de reciclagem"
+          class="w-3/4 sm:w-2/3 lg:w-full transform hover:rotate-3 transition duration-700"
+        />
       </div>
     </div>
   </section>
@@ -35,7 +74,7 @@
   <section class="py-16 px-6 grid md:grid-cols-2 gap-8 items-center max-w-6xl mx-auto">
     <div>
       <h2 class="text-3xl font-bold text-emerald-600 dark:text-lime-300 mb-4">
-        Econnect: Sustentabilidade em Ação
+        Econect: Sustentabilidade em Ação
       </h2>
       <p class="mb-4">
         O Econnect nasceu para unir quem coleta materiais recicláveis a quem precisa deles.
@@ -55,144 +94,84 @@
           Impacto social mensurável
         </li>
       </ul>
-      <a
-        routerLink="/pesquisa"
-        class="mt-6 inline-block px-6 py-2 bg-lime-400 hover:bg-lime-300 text-gray-900 rounded-full transition"
-      >
+      <a routerLink="/pesquisa"
+         class="mt-6 inline-block px-6 py-2 bg-lime-400 hover:bg-lime-300 text-gray-900 rounded-full transition">
         Ver Mapa de Coleta
       </a>
     </div>
     <div class="flex justify-center">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 512 512"
-        class="w-full h-full fill-lime-400 dark:fill-lime-300 transition-colors"
-      >
-        <!-- SVG content omitido para brevidade -->
-      </svg>
+      <div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          class="w-full h-full fill-lime-400 dark:fill-lime-300 transition-colors"
+        >
+          <circle cx="256" cy="256" r="256" fill="#91C0F1"/>
+          <path fill="#D7EDF3" d="M256,512C114.615,512,0,397.384,0,256S114.615,0,256,0V512z"/>
+          <path fill="#A2CE86" d="M142.83,345.053l3.763-4.164c12.842-14.212,12.595-35.91-0.567-49.827l-2.011-2.126
+            c-8.623-9.118-11.989-22.007-8.927-34.176c4.016-15.959-3.08-32.639-17.363-40.814l-97.426-58.006
+            C7.234,186.676,0,220.493,0,256c0,100.778,58.241,187.938,142.892,229.702l-9.008-109.85
+            C131.987,364.756,135.284,353.404,142.83,345.053z"/>
+          <g>
+            <path fill="#489B6D" d="M436.811,74.777l-16.915,18.486c-7.363,8.047-17.639,12.812-28.537,13.235l-76.503,2.969
+              c-13.56,0.527-25.973,7.756-33.121,19.291l-19.61,31.644c-8.866,14.308-8.044,32.59,2.072,46.044l12.178,16.196
+              c9.245,12.295,14.206,27.278,14.127,42.66l-0.259,50.205c-0.136,26.442,23.649,46.589,49.708,42.106l55.769-9.597
+              c15.328-2.637,29.349-10.278,39.875-21.727l0,0c18.726-20.368,46.625-27.139,71.444-19.946
+              c3.247-16.279,4.961-33.111,4.961-50.344C512,185.203,483.26,121.12,436.811,74.777z"/>
+            <path fill="#489B6D" d="M270.438,450.438c-17.042,7.556-26.831,25.666-23.817,44.062l2.854,17.416
+              c2.168,0.054,4.343,0.082,6.525,0.082c41.38,0,80.46-9.831,115.051-27.265l-4.36-6.497
+              C345.611,446.832,305.017,435.108,270.438,450.438z"/>
+          </g>
+          <path fill="#A2CE86" d="M145.49,101.316l51.928-29.224c8.166-4.596,14.086-12.345,16.373-21.433l12.308-48.911
+            c-58.35,6.789-110.711,33.189-150.316,72.45l32.275,24.542C118.906,106.986,133.616,107.999,145.49,101.316z"/>
+        </svg>
+      </div>
     </div>
   </section>
 
-  <!-- MODAL MULTI-ETAPA (glassmorphism) -->
+  <!-- MODAL MULTI-ETAPA -->
   <div
     *ngIf="showModal"
-    class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
   >
     <div
-      class="relative w-full max-w-md p-6
-             bg-white/10 dark:bg-gray-900/30
-             backdrop-blur-lg
-             border border-white/20
-             rounded-3xl
-             shadow-2xl
-             overflow-hidden"
+      class="bg-white dark:bg-gray-900 rounded-2xl p-6 w-full max-w-md shadow-xl relative z-60"
     >
-      <!-- botão fechar -->
       <button
         (click)="closeModal()"
+        class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
         aria-label="Fechar"
-        class="absolute top-4 right-4
-               w-8 h-8 flex items-center justify-center
-               bg-white/20 dark:bg-gray-800/40
-               backdrop-blur-md
-               rounded-full
-               text-white text-xl
-               hover:bg-white/30 hover:scale-110
-               transition"
       >&times;</button>
 
       <ng-container [ngSwitch]="etapa">
-
         <!-- Etapa 0 -->
-        <div *ngSwitchCase="0" class="space-y-6 text-center">
-          <h2 class="text-2xl font-bold text-white">Como você se identifica?</h2>
-          <div class="flex flex-col gap-4">
-            <button
-              (click)="selecionar('visitante')"
-              class="py-3 w-full
-                     bg-white/20 dark:bg-gray-800/40
-                     backdrop-blur-md
-                     border border-lime-400/50
-                     text-lime-300 font-semibold
-                     rounded-xl
-                     transform hover:-translate-y-1 hover:scale-105
-                     transition duration-300"
-            >
-              Sou visitante
-            </button>
-
-            <button
-              (click)="selecionar('coletor')"
-              class="py-3 w-full
-                     bg-white/20 dark:bg-gray-800/40
-                     backdrop-blur-md
-                     border border-emerald-500/50
-                     text-emerald-300 font-semibold
-                     rounded-xl
-                     transform hover:-translate-y-1 hover:scale-105
-                     transition duration-300"
-            >
-              Sou coletor
-            </button>
-
-            <button
-              (click)="selecionar('empreendedor')"
-              class="py-3 w-full
-                     bg-white/20 dark:bg-gray-800/40
-                     backdrop-blur-md
-                     border border-lime-300/50
-                     text-lime-200 font-semibold
-                     rounded-xl
-                     transform hover:-translate-y-1 hover:scale-105
-                     transition duration-300"
-            >
-              Sou empreendedor
-            </button>
+        <div *ngSwitchCase="0" class="text-center space-y-6">
+          <h2 class="text-2xl font-bold">Como você se identifica ?</h2>
+          <div class="flex flex-col gap-3">
+            <button (click)="selecionar('visitante')" class="btn-modal">Sou visitante</button>
+            <button (click)="selecionar('coletor')"   class="btn-modal">Sou coletor</button>
+            <button (click)="selecionar('empreendedor')" class="btn-modal">Sou empreendedor</button>
           </div>
         </div>
 
         <!-- Etapa 1: Coletor -->
-        <div *ngSwitchCase="1" class="space-y-6">
-          <h2 class="text-xl font-semibold text-white">Conte mais sobre você</h2>
+        <div *ngSwitchCase="1" class="space-y-4">
+          <h2 class="text-xl font-semibold">Conte mais sobre você</h2>
           <form class="space-y-4">
-
-            <!-- Sexo -->
             <div>
-              <label class="block mb-1 text-white">Sexo</label>
-              <select
-                [(ngModel)]="sexo"
-                name="sexo"
-                class="w-full p-3
-                       bg-white/20 dark:bg-gray-800/40
-                       backdrop-blur-md
-                       border border-white/30
-                       rounded-lg
-                       text-white
-                       placeholder-white
-                       focus:outline-none focus:ring-2 focus:ring-lime-300"
-              >
+              <label class="block mb-1">Sexo</label>
+              <select [(ngModel)]="sexo" name="sexo"
+                      class="w-full p-2 border rounded bg-white dark:bg-gray-800">
                 <option value="" disabled selected>Selecione</option>
                 <option value="masculino">Masculino</option>
                 <option value="feminino">Feminino</option>
                 <option value="outros">Outros</option>
               </select>
             </div>
-
-            <!-- Estado -->
             <div>
-              <label class="block mb-1 text-white">Estado</label>
-              <select
-                [(ngModel)]="estado"
-                name="estado"
-                class="w-full p-3
-                       bg-white/20 dark:bg-gray-800/40
-                       backdrop-blur-md
-                       border border-white/30
-                       rounded-lg
-                       text-white
-                       placeholder-white
-                       focus:outline-none focus:ring-2 focus:ring-lime-300"
-              >
+              <label class="block mb-1">Estado</label>
+              <select [(ngModel)]="estado" name="estado"
+                      class="w-full p-2 border rounded bg-white dark:bg-gray-800">
                 <option value="" disabled selected>Selecione o estado</option>
                 <option value="AC">Acre</option>
                 <option value="AL">Alagoas</option>
@@ -223,38 +202,20 @@
                 <option value="TO">Tocantins</option>
               </select>
             </div>
-
-            <!-- Idade -->
             <div>
-              <label class="block mb-1 text-white">Idade</label>
+              <label class="block mb-1">Idade</label>
               <input
                 type="number"
                 [(ngModel)]="idade"
                 name="idade"
                 placeholder="Idade"
-                class="w-full p-3
-                       bg-white/20 dark:bg-gray-800/40
-                       backdrop-blur-md
-                       border border-white/30
-                       rounded-lg
-                       text-white
-                       placeholder-white
-                       focus:outline-none focus:ring-2 focus:ring-lime-300"
+                class="w-full p-2 border rounded bg-white dark:bg-gray-800"
               />
             </div>
-
-            <!-- Botão Prosseguir -->
             <button
               type="button"
               (click)="goToPesquisa()"
-              class="w-full py-3
-                     bg-emerald-500/30 dark:bg-emerald-700/30
-                     backdrop-blur-md
-                     border border-emerald-400/50
-                     text-white font-semibold
-                     rounded-xl
-                     hover:bg-emerald-500/40 hover:scale-105
-                     transform transition duration-300"
+              class="w-full py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg transition"
             >
               Prosseguir
             </button>
@@ -262,41 +223,14 @@
         </div>
 
         <!-- Etapa 2: Empreendedor -->
-        <div *ngSwitchCase="2" class="space-y-6 text-center">
-          <p class="text-white">Deseja realizar o cadastro e transformar o mundo?</p>
+        <div *ngSwitchCase="2" class="text-center space-y-4">
+          <p>Deseja realizar o cadastro e transformar o mundo?</p>
           <div class="flex gap-4 justify-center">
-            <button
-              routerLink="/cadastro"
-              (click)="closeModal()"
-              class="px-6 py-3
-                     bg-lime-400/30 dark:bg-lime-300/30
-                     backdrop-blur-md
-                     border border-lime-300/50
-                     text-gray-900 dark:text-gray-800 font-semibold
-                     rounded-xl
-                     hover:bg-lime-400/40 hover:-translate-y-1
-                     transform transition duration-300"
-            >
-              Sim
-            </button>
-            <button
-              (click)="closeModal()"
-              class="px-6 py-3
-                     bg-white/20 dark:bg-gray-800/40
-                     backdrop-blur-md
-                     border border-white/30
-                     text-white font-semibold
-                     rounded-xl
-                     hover:bg-white/30 hover:-translate-y-1
-                     transform transition duration-300"
-            >
-              Não
-            </button>
+            <button routerLink="/cadastro" (click)="closeModal()" class="btn-modal">Sim</button>
+            <button (click)="closeModal()" class="btn-modal">Não</button>
           </div>
         </div>
-
       </ng-container>
     </div>
   </div>
-
 </div>
