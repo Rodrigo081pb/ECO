@@ -7,11 +7,7 @@ import { EmpreendedorService, Empreendedor } from '../../../../services/Empreend
 @Component({
   selector: 'app-home-admin',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './home-admin.component.html'
 })
 export class HomeAdminComponent implements OnInit {
@@ -20,7 +16,48 @@ export class HomeAdminComponent implements OnInit {
   empreendedor!: Empreendedor;
   saving = false;
   deleting = false;
-  message = '';
+  editing = false;
+
+  // Dias da semana para seleção
+  diasSemana: string[] = [
+    'Segunda-feira',
+    'Terça-feira',
+    'Quarta-feira',
+    'Quinta-feira',
+    'Sexta-feira',
+    'Sábado',
+    'Domingo'
+  ];
+
+  brazilianStates = [
+    { sigla: 'AC', nome: 'Acre' },
+    { sigla: 'AL', nome: 'Alagoas' },
+    { sigla: 'AP', nome: 'Amapá' },
+    { sigla: 'AM', nome: 'Amazonas' },
+    { sigla: 'BA', nome: 'Bahia' },
+    { sigla: 'CE', nome: 'Ceará' },
+    { sigla: 'DF', nome: 'Distrito Federal' },
+    { sigla: 'ES', nome: 'Espírito Santo' },
+    { sigla: 'GO', nome: 'Goiás' },
+    { sigla: 'MA', nome: 'Maranhão' },
+    { sigla: 'MT', nome: 'Mato Grosso' },
+    { sigla: 'MS', nome: 'Mato Grosso do Sul' },
+    { sigla: 'MG', nome: 'Minas Gerais' },
+    { sigla: 'PA', nome: 'Pará' },
+    { sigla: 'PB', nome: 'Paraíba' },
+    { sigla: 'PR', nome: 'Paraná' },
+    { sigla: 'PE', nome: 'Pernambuco' },
+    { sigla: 'PI', nome: 'Piauí' },
+    { sigla: 'RJ', nome: 'Rio de Janeiro' },
+    { sigla: 'RN', nome: 'Rio Grande do Norte' },
+    { sigla: 'RS', nome: 'Rio Grande do Sul' },
+    { sigla: 'RO', nome: 'Rondônia' },
+    { sigla: 'RR', nome: 'Roraima' },
+    { sigla: 'SC', nome: 'Santa Catarina' },
+    { sigla: 'SP', nome: 'São Paulo' },
+    { sigla: 'SE', nome: 'Sergipe' },
+    { sigla: 'TO', nome: 'Tocantins' }
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -31,6 +68,7 @@ export class HomeAdminComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Recupera dados do empreendedor
     if (isPlatformBrowser(this.platformId)) {
       const raw = localStorage.getItem('empreendedor');
       if (!raw) {
@@ -39,40 +77,85 @@ export class HomeAdminComponent implements OnInit {
       }
       this.empreendedor = JSON.parse(raw);
     }
-
     this.document.title = `Configurações – ${this.empreendedor.empresa}`;
 
-    // Grupo perfil
+    // Inicializa FormGroup de perfil, incluindo dias e horários separados e o campo concatenado
     this.profile = this.fb.group({
-      empresa:   [this.empreendedor.empresa, Validators.required],
-      email:     [this.empreendedor.email, [Validators.required, Validators.email]],
-      telefone:  [this.empreendedor.telefone, Validators.required],
-      municipio: [this.empreendedor.municipio, Validators.required],
-      estado:    [this.empreendedor.estado, Validators.required],
-      biografia: [this.empreendedor.biografia],
-      horario:   [this.empreendedor.horario, Validators.required]
+      empresa:    [this.empreendedor.empresa, Validators.required],
+      email:      [this.empreendedor.email, [Validators.required, Validators.email]],
+      telefone:   [this.empreendedor.telefone, Validators.required],
+      municipio:  [this.empreendedor.municipio, Validators.required],
+      estado:     [this.empreendedor.estado, Validators.required],
+      biografia:  [this.empreendedor.biografia],
+      diaInicio:  ['Segunda-feira', Validators.required],
+      diaFim:     ['Sexta-feira', Validators.required],
+      horaInicio: ['08:00', Validators.required],
+      horaFim:    ['19:00', Validators.required],
+      horario:    ['', Validators.required]
     });
 
-    // Tabela preços
+    // Preenche inicialmente o campo concatenado
+    this.updateHorario();
+
+    // Desabilita todos os controles até entrar em modo edição
+    this.profile.disable();
+
+    // Atualiza 'horario' sempre que qualquer parte mudar
+    ['diaInicio', 'diaFim', 'horaInicio', 'horaFim'].forEach(key => {
+      this.profile.get(key)!.valueChanges.subscribe(() => this.updateHorario());
+    });
+
+    // Inicializa FormArray de preços
     const priceCtrls = this.empreendedor.materiais.map(m =>
       this.fb.group({
-        material: [m],
+        material: [m, Validators.required],
         precoKg:  [(this.empreendedor as any)[`preco_${m}_kg`] ?? 0, [Validators.required, Validators.min(0)]],
         precoTon: [(this.empreendedor as any)[`preco_${m}_ton`] ?? 0, [Validators.required, Validators.min(0)]]
       })
     );
     this.form = this.fb.group({ prices: this.fb.array(priceCtrls) });
+    this.form.disable();
   }
 
   get prices(): FormArray {
     return this.form.get('prices') as FormArray;
   }
 
+  // Ativa edição
+  startEdit(): void {
+    this.editing = true;
+    this.profile.enable();
+    this.form.enable();
+  }
+
+  // Atualiza e concatena o horário no campo 'horario'
+  private updateHorario(): void {
+    const di = this.profile.get('diaInicio')!.value;
+    const df = this.profile.get('diaFim')!.value;
+    const hi = this.profile.get('horaInicio')!.value;
+    const hf = this.profile.get('horaFim')!.value;
+    const texto = `De ${di} a ${df}, das ${hi} às ${hf}`;
+    this.profile.get('horario')!.setValue(texto, { emitEvent: false });
+  }
+
+  addMaterial(): void {
+    this.prices.push(
+      this.fb.group({
+        material: ['', Validators.required],
+        precoKg:  [0, [Validators.required, Validators.min(0)]],
+        precoTon: [0, [Validators.required, Validators.min(0)]]
+      })
+    );
+  }
+
+  removeMaterial(index: number): void {
+    this.prices.removeAt(index);
+  }
+
   onSave(): void {
-    if (this.profile.invalid && this.form.invalid) return;
+    if (this.profile.invalid || this.form.invalid) return;
     this.saving = true;
 
-    // junta atualizações de perfil + preços
     const updates: any = { ...this.profile.value };
     this.prices.value.forEach((p: any) => {
       updates[`preco_${p.material}_kg`] = p.precoKg;
@@ -80,14 +163,16 @@ export class HomeAdminComponent implements OnInit {
     });
 
     this.service.atualizar(this.empreendedor.id!, updates).subscribe({
-      next: emp => {
-        // atualiza local e redireciona
-        localStorage.setItem('empreendedor', JSON.stringify(emp));
+      next: () => {
+        alert('Todas as informações foram salvas com sucesso!');
+        this.editing = false;
+        this.profile.disable();
+        this.form.disable();
         this.router.navigate(['']);
       },
       error: () => {
         this.saving = false;
-        this.message = 'Falha ao salvar. Tente novamente.';
+        alert('Falha ao salvar. Tente novamente.');
       }
     });
   }
@@ -102,7 +187,7 @@ export class HomeAdminComponent implements OnInit {
       },
       error: () => {
         this.deleting = false;
-        this.message = 'Falha ao excluir.';
+        alert('Falha ao excluir.');
       }
     });
   }
