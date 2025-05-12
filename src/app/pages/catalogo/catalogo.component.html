@@ -1,21 +1,27 @@
 <div class="min-h-screen flex flex-col bg-gradient-to-r from-emerald-900 to-teal-800 text-white">
 
   <!-- Cabeçalho -->
-  <header
-    class="mt-23 w-full max-w-7xl mx-auto flex items-center justify-between
-           px-4 sm:px-6 lg:px-8 py-4 bg-emerald-600 shadow-md rounded-xl"
-  >
-    <button
-      (click)="back()"
-      class="px-4 py-2 bg-white text-emerald-600 font-semibold rounded-xl
-             shadow hover:bg-emerald-50 transition transform hover:scale-105"
-    >
-      ← Voltar
-    </button>
-    <h1 class="text-2xl sm:text-3xl font-extrabold text-center flex-1">
-      Catálogo de {{ empreendedor?.empresa || '...' }}
-    </h1>
-    <div class="w-24 sm:w-32"></div>
+  <header class="mt-21 px-4 sm:px-6 lg:px-15">
+    <div class="bg-emerald-600 text-white rounded-3xl shadow-lg px-4 py-6 flex flex-col items-center sm:flex-row sm:justify-between gap-4">
+
+      <!-- Seção esquerda: Botão Voltar -->
+      <div class="w-full sm:w-auto flex justify-center sm:justify-start">
+        <button
+          (click)="back()"
+          class="inline-flex items-center px-4 py-2 bg-white text-emerald-600 font-semibold rounded-xl shadow hover:bg-emerald-50 transition transform hover:scale-105"
+        >
+          <i class="fas fa-arrow-left mr-2"></i> Voltar
+        </button>
+      </div>
+
+      <!-- Título centralizado no mobile, à esquerda no desktop -->
+      <h1 class="text-xl sm:text-2xl font-extrabold text-center sm:text-left">
+        Catálogo de {{ empreendedor?.empresa || '...' }}
+      </h1>
+
+      <!-- Espaço opcional ou menu futuramente -->
+      <div class="hidden sm:block w-24"></div>
+    </div>
   </header>
 
   <!-- Conteúdo principal -->
@@ -32,7 +38,6 @@
       </svg>
     </div>
 
-    <!-- Grid: detalhes (col-1) + tabela (col-2) -->
     <div *ngIf="!loading && empreendedor" class="w-full grid grid-cols-1 md:grid-cols-3 gap-6">
 
       <!-- Detalhes do Empreendedor -->
@@ -82,16 +87,13 @@
         </a>
 
         <!-- Botões CTA no bloco de detalhes -->
-        <div class="pt-4 border-t border-emerald-200 flex flex-col space-y-3">
+        <div class="pt-4 border-t border-emerald-200 text-center flex flex-col space-y-3">
           <a
             *ngIf="whatsAppLink"
             [href]="whatsAppLink"
             target="_blank"
             class="flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-full font-semibold transition transform hover:scale-105"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M16.86 13.41c-.27-.13-1.59-.78-1.84..."/>
-            </svg>
             Falar no WhatsApp
           </a>
         </div>

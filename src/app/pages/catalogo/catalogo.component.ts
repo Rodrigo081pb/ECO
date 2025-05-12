@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './catalogo.component.html',
+  styleUrl: './catalogo.component.css'
 })
 export class CatalogoComponent implements OnInit {
   empreendedor?: Empreendedor;
