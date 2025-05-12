@@ -1,3 +1,5 @@
+// src/app/pages/home-admin/home-admin.component.ts
+
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
@@ -20,15 +22,11 @@ export class HomeAdminComponent implements OnInit {
 
   // Dias da semana para seleção
   diasSemana: string[] = [
-    'Segunda-feira',
-    'Terça-feira',
-    'Quarta-feira',
-    'Quinta-feira',
-    'Sexta-feira',
-    'Sábado',
-    'Domingo'
+    'Segunda-feira', 'Terça-feira', 'Quarta-feira',
+    'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'
   ];
 
+  // Lista de estados brasileiros
   brazilianStates = [
     { sigla: 'AC', nome: 'Acre' },
     { sigla: 'AL', nome: 'Alagoas' },
@@ -68,7 +66,7 @@ export class HomeAdminComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Recupera dados do empreendedor
+    // Recupera dados do empreendedor do localStorage
     if (isPlatformBrowser(this.platformId)) {
       const raw = localStorage.getItem('empreendedor');
       if (!raw) {
@@ -77,9 +75,11 @@ export class HomeAdminComponent implements OnInit {
       }
       this.empreendedor = JSON.parse(raw);
     }
+
+    // Define o título da página
     this.document.title = `Configurações – ${this.empreendedor.empresa}`;
 
-    // Inicializa FormGroup de perfil, incluindo dias e horários separados e o campo concatenado
+    // Inicializa FormGroup de perfil
     this.profile = this.fb.group({
       empresa:    [this.empreendedor.empresa, Validators.required],
       email:      [this.empreendedor.email, [Validators.required, Validators.email]],
@@ -96,21 +96,19 @@ export class HomeAdminComponent implements OnInit {
 
     // Preenche inicialmente o campo concatenado
     this.updateHorario();
-
-    // Desabilita todos os controles até entrar em modo edição
     this.profile.disable();
 
-    // Atualiza 'horario' sempre que qualquer parte mudar
+    // Atualiza 'horario' sempre que qualquer parte do horário mudar
     ['diaInicio', 'diaFim', 'horaInicio', 'horaFim'].forEach(key => {
       this.profile.get(key)!.valueChanges.subscribe(() => this.updateHorario());
     });
 
-    // Inicializa FormArray de preços
+    // Inicializa FormArray de preços, lendo o campo correto `_tonelada`
     const priceCtrls = this.empreendedor.materiais.map(m =>
       this.fb.group({
         material: [m, Validators.required],
         precoKg:  [(this.empreendedor as any)[`preco_${m}_kg`] ?? 0, [Validators.required, Validators.min(0)]],
-        precoTon: [(this.empreendedor as any)[`preco_${m}_ton`] ?? 0, [Validators.required, Validators.min(0)]]
+        precoTon: [(this.empreendedor as any)[`preco_${m}_tonelada`] ?? 0, [Validators.required, Validators.min(0)]]
       })
     );
     this.form = this.fb.group({ prices: this.fb.array(priceCtrls) });
@@ -121,14 +119,14 @@ export class HomeAdminComponent implements OnInit {
     return this.form.get('prices') as FormArray;
   }
 
-  // Ativa edição
+  // Ativa o modo de edição
   startEdit(): void {
     this.editing = true;
     this.profile.enable();
     this.form.enable();
   }
 
-  // Atualiza e concatena o horário no campo 'horario'
+  // Concatena e atualiza o campo 'horario'
   private updateHorario(): void {
     const di = this.profile.get('diaInicio')!.value;
     const df = this.profile.get('diaFim')!.value;
@@ -152,22 +150,38 @@ export class HomeAdminComponent implements OnInit {
     this.prices.removeAt(index);
   }
 
+  // Método onSave completo e atualizado
   onSave(): void {
-    if (this.profile.invalid || this.form.invalid) return;
+    if (this.profile.invalid || this.form.invalid) {
+      return;
+    }
     this.saving = true;
 
+    // Monta o objeto de updates com todos os campos do perfil
     const updates: any = { ...this.profile.value };
+
+    // Adiciona dinamicamente os preços por material
     this.prices.value.forEach((p: any) => {
-      updates[`preco_${p.material}_kg`] = p.precoKg;
-      updates[`preco_${p.material}_ton`] = p.precoTon;
+      updates[`preco_${p.material}_kg`]       = p.precoKg;
+      updates[`preco_${p.material}_tonelada`] = p.precoTon;
     });
 
+    // Executa o PUT para atualizar o empreendedor
     this.service.atualizar(this.empreendedor.id!, updates).subscribe({
-      next: () => {
+      next: (res) => {
+        // 1) Atualiza o objeto em memória com a resposta do servidor
+        this.empreendedor = res;
+        // 2) Persiste o objeto atualizado no localStorage
+        localStorage.setItem('empreendedor', JSON.stringify(res));
+
         alert('Todas as informações foram salvas com sucesso!');
+
+        // Desativa o modo de edição e o form
         this.editing = false;
         this.profile.disable();
         this.form.disable();
+
+        // Redireciona para a rota principal (ou recarrega)
         this.router.navigate(['']);
       },
       error: () => {
