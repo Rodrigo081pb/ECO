@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   loading = false;
   error = '';
+  showPassword = false;
 
   constructor(
     private fb: FormBuilder,
@@ -29,10 +30,17 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.document.title = 'Login – Econnect';
     this.loginForm = this.fb.group({
-      email:    ['', [Validators.required, Validators.email]],
-      senha:    ['', [Validators.required, Validators.minLength(6)]],
+      email: ['', [Validators.required, Validators.email]],
+      senha: ['', [Validators.required, Validators.minLength(6)]],
       remember: [false]
     });
+  }
+
+  /**
+   * Alterna visibilidade da senha
+   */
+  toggleShowPassword(): void {
+    this.showPassword = !this.showPassword;
   }
 
   onSubmit(): void {
@@ -54,7 +62,7 @@ export class LoginComponent implements OnInit {
         const delay = Math.max(0, 3000 - (Date.now() - start));
 
         setTimeout(() => {
-          // Armazenamento condicional
+          // Armazenamento condicional conforme "lembrar"
           if (remember) {
             localStorage.setItem('empreendedor', JSON.stringify(emp));
           } else {

@@ -8,7 +8,7 @@ export interface Empreendedor {
   id?: number;
   empresa: string;
   email: string;
-  senha?: string;           // marcar como opcional
+  senha: string;           // marcar como opcional
   telefone: string;
   municipio: string;
   estado: string;
