@@ -55,6 +55,10 @@ export class CadastroComponent implements OnInit {
     { sigla: 'TO', nome: 'Tocantins' },
   ];
 
+  showSenha = false;
+  showConfirmar = false;
+
+
   loading = false;
   errorMsg = '';
 
