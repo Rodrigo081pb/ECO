@@ -1,110 +1,113 @@
-<br>
-<br>
-<!-- src/app/pesquisa/pesquisa.component.html -->
-<div class="min-h-screen bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-6">
-
-  <!-- Linha com botão voltar + filtros -->
-  <section class="mb-8 grid grid-cols-1 sm:grid-cols-4 gap-4 max-w-6xl mx-auto items-end">
-
+<div
+  class="min-h-screen p-4 sm:p-6 lg:p-8 bg-[#005B4F] text-gray-900 dark:text-gray-100"
+>
+  <br>
+  <br>
+  <br>
+  <!-- Filtros -->
+  <section
+    class="mb-10 max-w-7xl mx-auto p-4 sm:p-6 bg-white dark:bg-gray-800 rounded-3xl shadow-lg grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 items-end"
+    data-aos="fade-up"
+    data-aos-duration="600"
+  >
     <!-- Botão Voltar -->
     <div>
       <a
-        routerLink=" "
-        class="w-full inline-flex justify-center items-center px-4 py-2 bg-white dark:bg-gray-700 border border-emerald-500 text-emerald-600 font-semibold
-               rounded-full shadow-md hover:bg-emerald-50 hover:scale-105 transition-all duration-300 gap-2"
+        routerLink="/"
+        class="w-full inline-flex items-center justify-center px-4 py-2 sm:px-5 sm:py-3 bg-emerald-50 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-200 font-medium rounded-full shadow-md hover:bg-emerald-100 transition"
       >
-        <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-        </svg>
+        <i class="fas fa-arrow-left mr-2"></i>
         Voltar
       </a>
     </div>
 
     <!-- Estado -->
     <div>
-      <label class="block mb-1 font-medium">Filtrar por Estado</label>
-      <select
-        [(ngModel)]="filterEstado"
-        (ngModelChange)="applyFilters()"
-        class="w-full p-2 border rounded bg-white dark:bg-gray-700"
-      >
-        <option value="">Todos</option>
-        <option *ngFor="let uf of estados" [value]="uf">{{ uf }}</option>
-      </select>
+      <label for="estado" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Estado</label>
+      <div class="relative">
+        <select
+          id="estado"
+          [(ngModel)]="filterEstado"
+          (ngModelChange)="applyFilters()"
+          class="appearance-none w-full p-3 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-200"
+        >
+          <option value="">Todos</option>
+          <option *ngFor="let uf of estados" [value]="uf">{{ uf }}</option>
+        </select>
+        <i class="fas fa-chevron-down absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 pointer-events-none"></i>
+      </div>
     </div>
 
     <!-- Material -->
     <div>
-      <label class="block mb-1 font-medium">Filtrar por Material</label>
-      <select
-        [(ngModel)]="filterMaterial"
-        (ngModelChange)="applyFilters()"
-        class="w-full p-2 border rounded bg-white dark:bg-gray-700"
-      >
-        <option value="">Todos</option>
-        <option *ngFor="let m of materiaisList" [value]="m">{{ m }}</option>
-      </select>
+      <label for="material" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Material</label>
+      <div class="relative">
+        <select
+          id="material"
+          [(ngModel)]="filterMaterial"
+          (ngModelChange)="applyFilters()"
+          class="appearance-none w-full p-3 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-200"
+        >
+          <option value="">Todos</option>
+          <option *ngFor="let m of materiaisList" [value]="m">{{ m }}</option>
+        </select>
+        <i class="fas fa-chevron-down absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 pointer-events-none"></i>
+      </div>
     </div>
 
-    <!-- Botão Aplicar -->
+    <!-- Aplicar -->
     <div>
       <button
         (click)="applyFilters()"
-        class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded transition"
+        class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg shadow-md transition transform hover:scale-105"
       >
         Aplicar
       </button>
     </div>
   </section>
 
-  <!-- Resultados -->
-  <section class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+  <!-- Lista de Cards -->
+  <section class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
     <div
-      *ngFor="let e of filtered"
-      class="bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden flex flex-col"
+      *ngFor="let e of filtered; let i = index"
+      class="card flex flex-col"
+      data-aos="fade-up"
+      [attr.data-aos-delay]="i * 100"
     >
-      <!-- Ícone -->
-      <div class="flex justify-center p-4 bg-emerald-100 dark:bg-emerald-900">
-        <svg xmlns="http://www.w3.org/2000/svg"
-             class="w-12 h-12 text-emerald-600"
-             fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 2C8.134 2 5 5.134 5 9c0 4.418 7 13 7 13s7-8.582 7-13c0-3.866-3.134-7-7-7z"/>
-        </svg>
+      <div class="flex justify-center p-4 bg-emerald-50">
+        <img src="/ico-recicle.png" alt="Ícone Recicle" class="w-12 h-12" />
       </div>
 
-      <div class="p-4 flex-1 flex flex-col">
-        <h3 class="text-xl font-bold text-emerald-600 mb-2">{{ e.empresa }}</h3>
-        <p class="text-sm text-gray-700 dark:text-gray-300 mb-2 flex-1">
-          {{ e.biografia }}
-        </p>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">
-          <strong>Horário:</strong> {{ e.horario }}
-        </p>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-          <strong>Endereço:</strong> {{ e.estado }}, CEP {{ e.cep }}
-        </p>
-
-        <div class="mt-auto space-y-2">
-          <!-- WhatsApp -->
-          <a
-            [href]="whatsappLink(e)"
-            target="_blank"
-            class="block text-center py-2 bg-lime-400 hover:bg-lime-300 text-gray-900 rounded transition"
-          >
-            Entrar em Contato
-          </a>
-          <!-- Catálogo -->
-          <a
-            [routerLink]="['/catalogo', e.id]"
-            class="block text-center py-2 border border-emerald-600 text-emerald-600 rounded
-                   hover:bg-emerald-600 hover:text-white transition"
-          >
-            Ver Catálogo
-          </a>
+      <div class="p-4 flex-1 flex flex-col space-y-2">
+        <h3 class="text-lg sm:text-xl text-center font-bold text-emerald-600">{{ e.empresa }}</h3>
+        <div class="flex items-center text-sm text-gray-600">
+          <i class="fas fa-clock mr-2"></i>
+          <span><strong>Horário:</strong> {{ e.horario }}</span>
         </div>
+        <div class="flex items-center text-sm text-gray-600">
+          <i class="fas fa-map-marker-alt mr-2"></i>
+          <span><strong>Endereço:</strong> {{ e.estado }}, CEP {{ e.cep }}</span>
+        </div>
+      </div>
+
+      <div class="p-4 flex flex-col sm:flex-row gap-2">
+        <a
+          [href]="whatsappLink(e)"
+          target="_blank"
+          class="w-full text-center py-2 bg-lime-400 text-gray-900 rounded hover:bg-lime-300 transition transform hover:scale-105"
+          data-aos="zoom-in"
+          [attr.data-aos-delay]="i * 100 + 200"
+        >
+          <i class="fab fa-whatsapp mr-2"></i>Entrar em Contato
+        </a>
+        <a
+          [routerLink]="['/catalogo', e.id]"
+          class="w-full text-center py-2 border border-emerald-600 text-emerald-600 rounded hover:bg-emerald-600 hover:text-white transition transform hover:scale-105"
+          data-aos="zoom-in"
+          [attr.data-aos-delay]="i * 100 + 300"
+        >
+          <i class="fas fa-book-open mr-2"></i>Ver Catálogo
+        </a>
       </div>
     </div>
   </section>

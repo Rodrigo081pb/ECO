@@ -10,6 +10,7 @@ import { EmpreendedorService, Empreendedor } from '../../../../services/Empreend
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './pesquisa.component.html',
+  styleUrls: ['./pesquisa.component.css']
 })
 export class PesquisaComponent implements OnInit {
   empreendedores: Empreendedor[] = [];
@@ -46,7 +47,5 @@ export class PesquisaComponent implements OnInit {
     const digits = (e.telefone || '').replace(/\D+/g, '');
     return `https://wa.me/${digits}`;
   }
-
-
 
 }
